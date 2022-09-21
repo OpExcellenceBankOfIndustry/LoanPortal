@@ -1,0 +1,396 @@
+﻿@page "/individualownershipinfo"
+
+<EditForm Model="@ioInfo" OnValidSubmit="SubmitIndividualOwnershipInformation">
+    <DataAnnotationsValidator />
+
+    <div class="multisteps-form__content">
+        <h5 class="font-weight-bolder">Individual Shareholder</h5>
+            <div class="">
+                @*checked="@IsSelected" *@
+                <label class="categorychecklist"><input type="checkbox" @onchange="CheckBoxChanged" value="Shareholder">Shareholder</label>
+                <label class="categorychecklist"><input type="checkbox" @onchange="CheckBoxChanged" value="Director">Director</label>
+                <label class="categorychecklist"><input type="checkbox" @onchange="CheckBoxChanged" value="Promoter">Chief Promoter</label>
+                <label class="categorychecklist"><input type="checkbox" @onchange="CheckBoxChanged" value="Management">Management</label>
+                <label class="categorychecklist"><input type="checkbox" @onchange="CheckBoxChanged" value="Signatory">Signatory</label>
+                <label class="categorychecklist"><input type="checkbox" @onchange="CheckBoxChanged" value="Partner">Partner</label>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Title <span style="color:#ff0000">*</span></label>
+                    <InputSelect class="form-control selectpicker" @bind-Value="ioInfo.Title">
+                        <option>Select..</option>
+                        @if (title == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (title.Count > 0)
+                            {
+                                @foreach (var tt in title)
+                                {
+                                    <option value="@tt.name.Trim()">@tt.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => ioInfo.Title)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>First Name <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.FirstName" />
+                    <ValidationMessage For="@(() => ioInfo.FirstName)" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>Surname <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.Surname" />
+                    <ValidationMessage For="@(() => ioInfo.Surname)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Other Names</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.OtherNames" />
+                    <ValidationMessage For="@(() => ioInfo.OtherNames)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Maiden Name</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.MaidenName" />
+                    <ValidationMessage For="@(() => ioInfo.MaidenName)" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>Date of Birth <span style="color:#ff0000">*</span></label>
+                    @*<InputDate class="multisteps-form__input form-control" @bind-Value="ioInfo.DateOfBirth" />*@
+                    <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetBirthDate"/>
+                    <ValidationMessage For="@(() => ioInfo.DateOfBirth)" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Place of Birth <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.PlaceOfBirth" />
+                    <ValidationMessage For="@(() => ioInfo.PlaceOfBirth)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Gender <span style="color:#ff0000">*</span></label>
+                    <InputSelect class="form-control selectpicker" @bind-Value="ioInfo.Gender">
+                        <option>Select..</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => ioInfo.Gender)" />
+
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>Marital Status <span style="color:#ff0000">*</span></label>
+                    <InputSelect class="form-control selectpicker" @bind-Value="ioInfo.MaritalStatus">
+                        <option>Select..</option>
+                        @if (mStatus == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (mStatus.Count > 0)
+                            {
+                                @foreach (var ms in mStatus)
+                                {
+                                    <option value="@ms.name.Trim()">@ms.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => ioInfo.MaritalStatus)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Phone Number <span style="color:#ff0000">*</span></label>
+                    <InputNumber class="multisteps-form__input form-control" @bind-Value="ioInfo.PhoneNumber" />
+                    <ValidationMessage For="@(() => ioInfo.PhoneNumber)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Email Address <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control selectpicker" @bind-Value="ioInfo.EmailAddress" />
+                    <ValidationMessage For="@(() => ioInfo.EmailAddress)" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>Position <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.Position" />
+                    <ValidationMessage For="@(() => ioInfo.Position)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-8">
+                    <label>Home Address <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.HomeAddress" />
+                    <ValidationMessage For="@(() => ioInfo.HomeAddress)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Please upload proof of Address <span style="color:#ff0000">*</span></small></label>
+                    <InputFile class="multisteps-form__input form-control" @bind-Value="ioInfo.ProofOfAddress" OnChange="ProofOfAddress" />
+                    <ValidationMessage For="@(() => ioInfo.ProofOfAddress)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>State <span style="color:#ff0000">*</span></label>
+                    <select id="State" class="form-control selectpicker" @onchange="GetLga" required>
+                        <option>Select..</option>
+                        @if (States == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (States.Count > 0)
+                            {
+                                @foreach (var st in States)
+                                {
+                                    <option value="@st.id">@st.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>LGA <span style="color:#ff0000">*</span></label>
+                    <select id="Lga" class="form-control selectpicker" name="lga" @onchange="GetCity" required>
+                        <option>Select..</option>
+                        @if (Lgas == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (Lgas.Count > 0)
+                            {
+                                @foreach (var lg in Lgas)
+                                {
+                                    <option value="@lg.id">@lg.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </select>
+                    @*<ValidationMessage For="@(() => coyInfo.LGA)" />*@
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0 a11y-input-tooltip">
+                    <label>Town/City <span style="color:#ff0000">*</span></label>
+                    <InputSelect @bind-Value="ioInfo.TownCity" class="form-control selectpicker">
+                        <option>Select..</option>
+                        @if (cities == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (cities.Count > 0)
+                            {
+                                @foreach (var ct in cities)
+                                {
+                                    <option value="@ct.name.Trim()">@ct.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => ioInfo.TownCity)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Highest Educational Qualification<span style="color:#ff0000">*</span></label>
+                    <InputSelect class="form-control selectpicker" @bind-Value="ioInfo.HighestEducationalQualification">
+                        <option>Select..</option>
+                        @if (education == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (education.Count > 0)
+                            {
+                                @foreach (var ed in education)
+                                {
+                                    <option value="@ed.name.Trim()">@ed.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => ioInfo.HighestEducationalQualification)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>BVN Number <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.BVN" />
+                    <ValidationMessage For="@(() => ioInfo.BVN)" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>NIN <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.NIN" />
+                    <ValidationMessage For="@(() => ioInfo.NIN)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>TIN</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.TIN" />
+                    <ValidationMessage For="@(() => ioInfo.TIN)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Percentage Ownership <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.PercentageOwnership" />
+                    <ValidationMessage For="@(() => ioInfo.PercentageOwnership)" />
+                </div>
+                
+            <div class="col-12 col-sm-4">
+                        <label>Nationality <span style="color:#ff0000">*</span></label>
+                       <select class="form-control selectpicker" id="Nationality" @onchange="OnNationalityChange">
+                        <option>Select..</option>
+                        @if (country.allCountries == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (country.allCountries.Count > 0)
+                            {
+                                @foreach (var co in country.allCountries)
+                                {
+                                    <option value="@co.name.Trim()">@co.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </select>
+                    <ValidationMessage For="@(() => ioInfo.Nationality)" />
+                    </div>
+                </div>
+                @if (hideCERPACInd)
+                {
+                    <div class="row mt-3">
+                     <div class="col-12 col-sm-4">
+                        <label>CERPAC (Resident Permit Number)</label>
+                        <InputFile @bind-Value="ioInfo.CERPAC" class="multisteps-form__input form-control" OnChange="GetCERPAC" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>CERPAC Issue Date</label>
+                        @*<InputDate @bind-Value="ioInfo.CERPACIssueDate" class="multisteps-form__input form-control"/>*@
+                        <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetCERPACIssueDate"/>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>CERPAC Expiry Date</label>
+                        @*<InputDate @bind-Value="ioInfo.CERPACExpiryDate" class="multisteps-form__input form-control" />*@
+                        <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetCERPACExpiryDate"/>
+                    </div>
+                    </div>
+                }
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Identification Type <span style="color:#ff0000">*</span></label>
+                    <InputSelect class="form-control selectpicker" @bind-Value="ioInfo.IdentificationType">
+                        <option>--Select--</option>
+                        @if (idType == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (idType.Count > 0)
+                            {
+                                @foreach (var id in idType)
+                                {
+                                    <option value="@id.name.Trim()">@id.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => ioInfo.IdentificationType)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Identification Number <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.IdentificationNumber" />
+                    <ValidationMessage For="@(() => ioInfo.IdentificationNumber)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Please upload the Identification file here <span style="color:#ff0000">*</span></small></label>
+                    <InputFile class="multisteps-form__input form-control" @bind-Value="ioInfo.IdentificationFile" OnChange="IdentificationFile" />
+                    <ValidationMessage For="@(() => ioInfo.IdentificationFile)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Identification Issue Date <span style="color:#ff0000">*</span></label>
+                    @*<InputDate class="multisteps-form__input form-control" @bind-Value="ioInfo.IdentificationIssueDate" />*@
+                    <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetIdIssueDate"/>
+                    <ValidationMessage For="@(() => ioInfo.IdentificationIssueDate)" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>Identification Expiry Date <span style="color:#ff0000">*</span></label>
+                    @*<InputDate class="multisteps-form__input form-control" @bind-Value="ioInfo.IdentificationExpiryDate" />*@
+                    <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetIdExpiryDate"/>
+                    <ValidationMessage For="@(() => ioInfo.IdentificationExpiryDate)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Please upload passport photograph here.(.jgp,.png,.jpeg) <span style="color:#ff0000">*</span></small></label>
+                    <InputFile class="multisteps-form__input form-control" @bind-Value="ioInfo.PassportPhotograph" OnChange="PassportPhotograph"/>
+                    <ValidationMessage For="@(() => ioInfo.PassportPhotograph)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Occupation <span style="color:#ff0000">*</span></label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.Occupation" />
+                    <ValidationMessage For="@(() => ioInfo.Occupation)" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>Job Title <span style="color:#ff0000">*</span></label>
+                    <InputText class="form-control selectpicker" @bind-Value="ioInfo.JobTitle">
+                    </InputText>
+                    <ValidationMessage For="@(() => ioInfo.JobTitle)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Please upload CV <span style="color:#ff0000">*</span></small></label>
+                    <InputFile class="multisteps-form__input form-control" @bind-Value="ioInfo.UploadCV" OnChange="UploadCV"/>
+                    <ValidationMessage For="@(() => ioInfo.UploadCV)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-6">
+                    <label>Do you have any political affiliation or hold any political office? <span style="color:#ff0000">*</span></label>
+                    <select class="form-control selectpicker" id="politicalAffiliation" @onchange="AnyPoliticalAffiliation">
+                        <option>--Select--</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    @if (AnyPoliticalAffiliate)
+                    {
+                        <label>If Yes, state the political office/Relationship</label>
+                        <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.IndicatePoliticalOfficerRelationship" />
+                    }
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label>Have you contested or occupied any political office in the past? <span style="color:#ff0000">*</span></label>
+                    <select class="form-control selectpicker" id="ContestedOffice" @onchange="HoldAnyPoliticalOffice">
+                        <option>--Select--</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    @if (HoldPoliticalOffice)
+                    {
+                        <label>State the political office</label>
+                        <InputText class="multisteps-form__input form-control" @bind-Value="ioInfo.IndicatePoliticalOffice" />
+                    }
+                </div>
+            </div>
+
+            <div class="button-row d-flex mt-4">
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="submit" >Add</button>
+            </div>
+    </div>
+ 
+</EditForm>
+
+@code {
+
+}

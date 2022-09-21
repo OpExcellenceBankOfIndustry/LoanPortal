@@ -1,0 +1,164 @@
+﻿@page "/nextofkin"
+
+<EditForm Model="@kin" OnValidSubmit="SubmitForm">
+    <DataAnnotationsValidator />
+        <div class="multisteps-form__content">
+            <p class="font-weight-bolder">Details of Next of Kin</p>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Title</label>
+                     <InputSelect class="form-control selectpicker" @bind-Value="kin.Title">
+                        <option>Select..</option>
+                        @if (title == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (title.Count > 0)
+                            {
+                                @foreach (var tt in title)
+                                {
+                                    <option value="@tt.name.Trim()">@tt.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => kin.Title)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>First Name</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="kin.FirstName" />
+                    <ValidationMessage For="@(() => kin.FirstName)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>other Names</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="kin.OtherNames" />
+                    <ValidationMessage For="@(() => kin.OtherNames)" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Surname</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="kin.Surname" />
+                    <ValidationMessage For="@(() => kin.Surname)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Date of Birth </label>
+                    @*<InputDate class="multisteps-form__input form-control" @bind-Value="kin.DateOfBirth" />*@
+                    <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetBirthDate"/>
+                    <ValidationMessage For="@(() => kin.DateOfBirth)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>place of birth</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="kin.PlaceOfBirth"/>
+                    <ValidationMessage For="@(() => kin.PlaceOfBirth)" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Gender</label>
+                    <InputSelect class="form-control selectpicker" @bind-Value="kin.Gender">
+                        <option>Select..</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => kin.Gender)" />
+                </div>
+                <div class="col-12 col-sm-8 mt-3 mt-sm-0">
+                    <label>Address</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="kin.HomeAddress" />
+                </div>
+                
+            </div>
+
+            <div class="row mt-3">
+                
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>State <span style="color:#ff0000">*</span></label>
+                    <select id="State" class="form-control selectpicker" @onchange="GetLga" required>
+                        <option>Select..</option>
+                        @if (States == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (States.Count > 0)
+                            {
+                                @foreach (var st in States)
+                                {
+                                    <option value="@st.id">@st.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>LGA <span style="color:#ff0000">*</span></label>
+                    <select id="Lga" class="form-control selectpicker" name="lga" @onchange="GetCity" required>
+                        <option>Select..</option>
+                        @if (Lgas == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (Lgas.Count > 0)
+                            {
+                                @foreach (var lg in Lgas)
+                                {
+                                    <option value="@lg.id">@lg.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </select>
+                    @*<ValidationMessage For="@(() => coyInfo.LGA)" />*@
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0 a11y-input-tooltip">
+                    <label>Town/City <span style="color:#ff0000">*</span></label>
+                    <InputSelect @bind-Value="kin.TownCity" class="form-control selectpicker">
+                        <option>Select..</option>
+                        @if (cities == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (cities.Count > 0)
+                            {
+                                @foreach (var ct in cities)
+                                {
+                                    <option value="@ct.name.Trim()">@ct.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => kin.TownCity)" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Phone Number</label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="kin.PhoneNumber" />
+                    <ValidationMessage For="@(() => kin.PhoneNumber)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Email </label>
+                    <InputText class="multisteps-form__input form-control" @bind-Value="kin.EmailAddress" />
+                    <ValidationMessage For="@(() => kin.EmailAddress)" />
+                </div>
+            </div>
+
+            <div class="button-row d-flex mt-4">
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="submit">Add</button>
+            </div>
+        </div>
+</EditForm>
+
+@code {
+
+}

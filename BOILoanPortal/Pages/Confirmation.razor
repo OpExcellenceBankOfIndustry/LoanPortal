@@ -1,0 +1,604 @@
+﻿@page "/confirm"
+@page "/confirm/{id}"
+
+<EditForm Model="@confirmInfo" class="" OnValidSubmit="SubmitValidatedForm">
+    <DataAnnotationsValidator />
+    <div class="col-12 col-lg-11 m-auto">
+        <h4 class="font-weight-bolder header-font"> <strong> Company Information </strong></h4>
+        <fieldset class="border p-2">
+            <div class="row mt-3">
+                <div class="col-12 col-sm-6">
+                    <label>Company Name  <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.CompanyName" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.CompanyName)" />
+                </div>
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Company Short Name</label>
+                    <InputText @bind-Value="confirmInfo.CompanyShortName" class="multisteps-form__input form-control popover-test" readonly />
+                    @*<ValidationMessage For="@(() => coyInfo.CompanyShortName)" />*@
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Company Type<span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.CompanyType" class="form-control selectpicker" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.CompanyType)" />
+                </div>
+            </div>
+            <br />
+
+            <p class="font-weight-bolder">Registered Company Address</p>
+
+            <div class="row mt-3">
+                <div class="col-12 col-sm-6">
+                    <label>Address <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.CompanyAddress" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.CompanyAddress)" />
+                </div>
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Landmark <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.Landmark" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.Landmark)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>State <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.State" class="form-control selectpicker" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.State)" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>LGA <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.LGA" class="form-control selectpicker" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.LGA)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0 a11y-input-tooltip">
+                    <label>Town/City <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.TownCity" class="form-control selectpicker" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.TownCity)" />
+                </div>
+
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Phone Number <span style="color:#ff0000">*</span></label>
+                    <InputNumber @bind-Value="confirmInfo.PhoneNumber" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.PhoneNumber)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Email Address <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.EmailAddress" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.EmailAddress)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Website</label>
+                    <InputText @bind-Value="confirmInfo.Website" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.Website)" />
+                </div>
+
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Twitter</label>
+                    <InputText @bind-Value="confirmInfo.Twitter" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.Twitter)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Facebook</label>
+                    <InputText @bind-Value="confirmInfo.Facebook" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.Facebook)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Instagram</label>
+                    <InputText @bind-Value="confirmInfo.Instagram" class="multisteps-form__input form-control" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.Instagram)" />
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Does the company owns business premises? <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.CompanyOwnsBusinessPremises" class="form-control selectpicker" readonly />
+                    <ValidationMessage For="@(() => confirmInfo.CompanyOwnsBusinessPremises)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Please upload proof of Company Address <span style="color:#ff0000">*</span></small></label>
+                    <InputText @bind-Value="confirmInfo.ProofOfCompanyAddressName" class="multisteps-form__input form-control" readonly />
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <h4 class="font-weight-bolder header-font"> <strong>Regulatory Information </strong></h4>
+        <fieldset class="border p-2">
+            <div class="">
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Company Registration Number <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="confirmInfo.CompanyRegistrationNumber" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.CompanyRegistrationNumber)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Date of Incorporation/Registration <span style="color:#ff0000">*</span></label>
+                        <InputDate @bind-Value="confirmInfo.DateOfIncorporationRegistration" class="form-control" format-value="yyyy-mm-dd" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.DateOfIncorporationRegistration)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Date Business Started <span style="color:#ff0000">*</span></label>
+                        <InputDate @bind-Value="confirmInfo.DateBusinessStarted" class="multisteps-form__input form-control" format-value="yyyy-mm-dd" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.DateBusinessStarted)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>TIN <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="confirmInfo.TIN" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.TIN)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>SCUML Number</label>
+                        <InputText @bind-Value="confirmInfo.SCUMLNumber" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.SCUMLNumber)" />
+                    </div>
+                </div>
+                <p class="font-weight-bolder">Documentation</p>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Upload Certificate of Incorporation/Registration <span style="color:#ff0000">*</span></small></label>
+                        <InputText @bind-Value="confirmInfo.CertificateOfIncorporationName" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.CertificateOfIncorporationName)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Upload form CO2 - Allotment of Shares <span style="color:#ff0000">*</span></small></label>
+                        <InputText @bind-Value="confirmInfo.FormCO2AllotmentOfSharesName" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.FormCO2AllotmentOfSharesName)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Upload form CO7 - Particulars of Directors <span style="color:#ff0000">*</span></small></label>
+                        <InputText @bind-Value="confirmInfo.FormCO7ParticularsOfDirectorsName" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.FormCO7ParticularsOfDirectorsName)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Upload Memart <span style="color:#ff0000">*</span></small></label>
+                        <InputText @bind-Value="confirmInfo.MemartName" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.MemartName)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Upload Board Resolution <span style="color:#ff0000">*</span></small></label>
+                        <InputText @bind-Value="confirmInfo.BoardResolutionName" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.BoardResolutionName)" />
+                    </div>
+
+                </div>
+                <br />
+                <p class="font-weight-bolder">Financials</p>
+
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Authorised Share Capital <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="confirmInfo.AuthorisedShareCapital" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.AuthorisedShareCapital)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Paid-Up Capital <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="confirmInfo.PaidUpCapital" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.PaidUpCapital)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Annual Turnover <span style="color:#ff0000">*</span></label>
+
+                        <InputText @bind-Value="confirmInfo.AnnualTurnover" class="form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.AnnualTurnover)" />
+                    </div>
+                </div>
+                @*<br />*@
+                <p class="font-weight-bolder">Other Information</p>
+
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Current Number of Employees <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="confirmInfo.CurrentNumberOfEmployees" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.CurrentNumberOfEmployees)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Parent Company (If applicable)</label>
+                        <InputText @bind-Value="confirmInfo.ParentCompany" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.ParentCompany)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>Subsidiaries/Affiliates (If applicable)</label>
+                        <InputText @bind-Value="confirmInfo.SubsidiariesAffiliates" class="multisteps-form__input form-control" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.SubsidiariesAffiliates)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                        <label>Nature of Business <span style="color:#ff0000">*</span></label>
+                        <InputTextArea @bind-Value="confirmInfo.NatureOfBusiness" rows="4" class="multisteps-form__input form-control selectpicker" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.NatureOfBusiness)" />
+                    </div>
+                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                        <label>Previous Business Engaged in? <span style="color:#ff0000">*</span></label>
+                        <InputTextArea @bind-Value="confirmInfo.PreviousBusinessEngagedIn" rows="4" class="multisteps-form__input form-control selectpicker" readonly />
+                        <ValidationMessage For="@(() => confirmInfo.PreviousBusinessEngagedIn)" />
+                    </div>
+                </div>
+                <br />
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Organization Membership</label>
+                        <InputText @bind-Value="confirmInfo.OrganizationMembership" class="form-control selectpicker" readonly />
+                        <br />
+                        @if (confirmInfo.membership)
+                        {
+                            <div class="" id="membership12">
+                                <fieldset class="border p-2">
+                                    <label>Name of Organization</label>
+                                    <InputText @bind-Value="confirmInfo.NameOfOrganization" class="multisteps-form__input form-control" readonly />
+
+                                    <label>Membership Number</label>
+                                    <InputText @bind-Value="confirmInfo.MembershipNumber" class="multisteps-form__input form-control" readonly />
+
+                                    <label>Joined Date</label>
+                                    <InputDate @bind-Value="confirmInfo.JoinedDate" class="multisteps-form__input form-control" format-value="yyyy-mm-dd" readonly />
+                                </fieldset>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>Present/threatened litigation with third-party?</label>
+                        <InputText @bind-Value="confirmInfo.PresentThreatenedLitigationWithThirdParty" class="form-control selectpicker" readonly />
+                        <br />
+                        @if (confirmInfo.litigation)
+                        {
+                            <div class="" id="litigation">
+                                <fieldset class="border p-2" id="div-litigation">
+                                    <label>Third-party Name</label>
+                                    <InputText @bind-Value="confirmInfo.ThirdPartyName" class="multisteps-form__input form-control" readonly />
+                                    <label>Suit Number</label>
+                                    <InputText @bind-Value="confirmInfo.SuitNumber" class="multisteps-form__input form-control" readonly />
+                                </fieldset>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Is your company quoted on any stock Exchange?</label>
+                        <InputText @bind-Value="confirmInfo.IsYourCompanyQuotedOnAnyStockExchange" class="form-control selectpicker" readonly />
+                        <br />
+                        @if (confirmInfo.companyQuoted)
+                        {
+                            <div class="" id="companyQuoted">
+                                <fieldset class="border p-2" id="div-stock-exchange">
+                                    <label>Indicate Stock Symbol</label>
+                                    <InputText @bind-Value="confirmInfo.IndicateStockSymbol" class="multisteps-form__input form-control" readonly />
+                                    <label>Stock Exchange</label>
+                                    <InputText @bind-Value="confirmInfo.StockExchange" class="multisteps-form__input form-control" readonly />
+                                </fieldset>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <br />
+            </div>
+        </fieldset>
+
+        <br />
+
+        <h4 class="font-weight-bolder header-font"> <strong>Ownership Information </strong></h4>
+        @if (IsSP)
+        {
+            <h5 class="table-header">Details of Sole Proprietorship</h5>
+            <fieldset class="border p-2">
+                <div id="shareholder-indv-table">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body px-0 pb-0">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-flush" id="products-list">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Fullname</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Email Address</th>
+                                                    <th>Gender</th>
+                                                    <th>Marital Status</th>
+                                                    @*<th>Identification Type</th>
+                                                        <th>Identification Number</th>
+                                                        <th>BVN</th>
+                                                        <th>NIN</th>
+                                                        <th>TIN</th>
+                                                        <th>Home Address</th>
+                                                        <th>Proof of Address</th>
+                                                        <th>Proof Identification</th>
+                                                        <th>PassportPhotograph</th>
+                                                        <th>UploadedCV</th>
+                                                        <th>CERPAC</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-sm">@confirmInfo.SP_Title</td>
+                                                    <td class="text-sm">@confirmInfo.SP_FirstName @confirmInfo.SP_Surname</td>
+                                                    <td class="text-sm">@confirmInfo.SP_PhoneNumber</td>
+                                                    <td class="text-sm">@confirmInfo.SP_Gender</td>
+                                                    <td class="text-sm">@confirmInfo.SP_MaritalStatus</td>
+                                                    @*<td class="text-sm">@confirmInfo.SP_IdentificationType</td>
+                                                        <td class="text-sm">@confirmInfo.SP_IdentificationNumber</td>
+                                                        <td class="text-sm">@confirmInfo.SP_BVN</td>
+                                                        <td class="text-sm">@confirmInfo.SP_NIN</td>
+                                                        <td class="text-sm">@confirmInfo.SP_TIN</td>
+                                                        <td class="text-sm">@confirmInfo.SP_HomeAddress</td>
+                                                        <td class="text-sm">@confirmInfo.SP_ProofOfAddressName</td>
+                                                        <td class="text-sm">@confirmInfo.SP_IdentificationFileName</td>
+                                                        <td class="text-sm">@confirmInfo.SP_PassportPhotographName</td>
+                                                        <td class="text-sm">@confirmInfo.SP_UploadCVName</td>
+                                                        <td class="text-sm">@confirmInfo.SP_CERPACName</td>*@
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <p class="table-header"> Details of Next of Kin</p>
+                <div id="shareholder-indv-table">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body px-0 pb-0">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-flush" id="products-list">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Fullname</th>
+                                                    <th>Gender</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Email Address</th>
+                                                    <th>Home Address</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (confirmInfo.kins != null)
+                                                {
+                                                    @foreach (var kin in confirmInfo.kins)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-sm">@kin.Title</td>
+                                                            <td class="text-sm">@kin.FirstName @kin.Surname</td>
+                                                            <td class="text-sm">@kin.Gender</td>
+                                                            <td class="text-sm">@kin.PhoneNumber</td>
+                                                            <td class="text-sm">@kin.EmailAddress</td>
+                                                            <td class="text-sm">@kin.HomeAddress</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <p class="table-header">Account Details</p>
+                <div id="shareholder-cor-table">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body px-0 pb-0">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-flush" id="products-list">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Account Name</th>
+                                                    <th>Account Number</th>
+                                                    <th>Bank Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (confirmInfo.accts != null)
+                                                {
+                                                    @foreach (var acct in confirmInfo.accts)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-sm">@acct.AccountName</td>
+                                                            <td class="text-sm">@acct.AccountNumber</td>
+                                                            <td class="text-sm">@acct.BankName</td>
+                                                        </tr>
+                                                    }
+                                                }
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+        }
+        else
+        {
+            <fieldset class="border p-2">
+                @if (confirmInfo.Inds != null)
+                {
+                    <h5 class="table-header">Individual Shareholder</h5>
+                    <div id="shareholder-indv-table">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body px-0 pb-0">
+
+                                        <div class="table-responsive">
+                                            <table class="table table-flush" id="products-list">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Title</th>
+                                                        <th>Fullname</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Email Address</th>
+                                                        <th>Gender</th>
+                                                        <th>Marital Status</th>
+                                                        @*<th>Identification Type</th>
+                                                            <th>Identification Number</th>
+                                                            <th>BVN</th>
+                                                            <th>NIN</th>
+                                                            <th>TIN</th>
+                                                            <th>Home Address</th>
+                                                            <th>Proof of Address</th>
+                                                            <th>Proof Identification</th>
+                                                            <th>PassportPhotograph</th>
+                                                            <th>UploadedCV</th>
+                                                            <th>CERPAC</th>*@
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach (var ind in confirmInfo.Inds)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-sm">@ind.Title</td>
+                                                            <td class="text-sm">@ind.FirstName @ind.Surname</td>
+                                                            <td class="text-sm">@ind.PhoneNumber</td>
+                                                            <td class="text-sm">@ind.Gender</td>
+                                                            <td class="text-sm">@ind.MaritalStatus</td>
+                                                            @*<td class="text-sm">@ind.IdentificationType</td>
+                                                                <td class="text-sm">@ind.IdentificationNumber</td>
+                                                                <td class="text-sm">@ind.BVN</td>
+                                                                <td class="text-sm">@ind.NIN</td>
+                                                                <td class="text-sm">@ind.TIN</td>
+                                                                <td class="text-sm">@ind.HomeAddress</td>
+                                                                <td class="text-sm">@ind.ProofOfAddressName</td>
+                                                                <td class="text-sm">@ind.IdentificationFileName</td>
+                                                                <td class="text-sm">@ind.PassportPhotographName</td>
+                                                                <td class="text-sm">@ind.UploadCVName</td>
+                                                                <td class="text-sm">@ind.CERPACName</td>*@
+                                                        </tr>
+                                                    }
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <br />
+                @if (confirmInfo.Corps != null)
+                {
+                    <h5 class="table-header">Corporate Shareholder</h5>
+                    <div id="shareholder-cor-table">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body px-0 pb-0">
+
+                                        <div class="table-responsive">
+                                            <table class="table table-flush" id="products-list">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Company Name</th>
+                                                        <th>Reg Number</th>
+                                                        <th>% Ownership</th>
+                                                        <th>Contact Person Name</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Company Address</th>
+                                                        <th>Certificate of Incorporation</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach (var corp in confirmInfo.Corps)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-sm">@corp.NameOfShareholdingCompany</td>
+                                                            <td class="text-sm">@corp.RegistrationNumber</td>
+                                                            <td class="text-sm">@corp.PercentageOwnership</td>
+                                                            <td class="text-sm">@corp.ContactPersonName</td>
+                                                            <td class="text-sm">@corp.PhoneNumber</td>
+                                                            <td class="text-sm">@corp.CompanyAddress</td>
+                                                            <td class="text-sm">@corp.CertificateOfIncorporationRegistrationName</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </fieldset>
+        }
+        <br />
+        <div class="multisteps-form__content">
+            <h3 class="font-weight-bolder header-font"> <strong>Related Party Information </strong></h3>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>How do you know about BOI? <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.HowDoYouKnowAboutBOI" class="form-control selectpicker" readonly />
+                </div>
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Do you have any relationship with any BOI employee or any its directors?<span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="confirmInfo.AnyRelationshipWithAnyBOIEmployeeOrAnyOfItsDirectors" class="form-control selectpicker" id="relationshipwithboi" readonly />
+                </div>
+            </div>
+            @if (confirmInfo.RelationshipExists)
+            {
+                <div class="row mt-3">
+
+                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    </div>
+                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                        <fieldset class="border p-2" id="relationshipId">
+                            <label>Name of Employee/Director</label>
+                            <InputText @bind-Value="confirmInfo.NameOfEmployeeDirector" class="multisteps-form__input form-control" readonly />
+                            <label>Relationship</label>
+                            <InputText @bind-Value="confirmInfo.Relationship" class="form-control selectpicker" readonly />
+                        </fieldset>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="row">
+            <div class="button-row d-flex mt-4">
+                <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button" @onclick="BackToRelatedPartyInfo">Previous</button>
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="button">Save</button>
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="submit">Next</button>
+
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+
+}

@@ -1,0 +1,232 @@
+﻿@page "/regulatoryInfo"
+@page "/regulatoryInfo/{id}"
+
+<EditForm Model="@regInfo" class="" OnValidSubmit="SubmitRegInfoForm">
+    @*<DataAnnotationsValidator />*@
+    <div class="col-12 col-lg-11 m-auto">
+        <h3 class="font-weight-bolder header-font"> <strong>Regulatory Information </strong></h3>
+        <div class="">
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Company Registration Number <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="regInfo.CompanyRegistrationNumber" class="multisteps-form__input form-control" />
+                    <ValidationMessage For="@(() => regInfo.CompanyRegistrationNumber)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Date of Incorporation/Registration <span style="color:#ff0000">*</span></label>
+                    @*<InputDate @bind-Value="regInfo.DateOfIncorporationRegistration" class="form-control" format="yyyy-MM-dd" />*@
+                    <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetRegDate"/>
+                    <ValidationMessage For="@(() => regInfo.DateOfIncorporationRegistration)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Date Business Started <span style="color:#ff0000">*</span></label>
+                    @*<InputDate @bind-Value="regInfo.DateBusinessStarted" class="multisteps-form__input form-control" format-value="yyyy-MM-dd" />*@
+                    <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetBizStartDate"/>
+                    <ValidationMessage For="@(() => regInfo.DateBusinessStarted)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>TIN <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="regInfo.TIN" class="multisteps-form__input form-control" />
+                    <ValidationMessage For="@(() => regInfo.TIN)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>SCUML Number</label>
+                    <InputText @bind-Value="regInfo.SCUMLNumber" class="multisteps-form__input form-control" />
+                    <ValidationMessage For="@(() => regInfo.SCUMLNumber)" />
+                </div>
+            </div>
+            <p class="font-weight-bolder">Documentation</p>
+            @*<fieldset class="border p-2">*@
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Upload Certificate of Incorporation/Registration <span style="color:#ff0000">*</span></small></label>
+                    <InputFile @bind-Value="regInfo.CertificateOfIncorporationRegistration" class="multisteps-form__input form-control" OnChange="CertificateOfIncorporationRegistration" />
+                    <ValidationMessage For="@(() => regInfo.CertificateOfIncorporationRegistration)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Upload form CO2 - Allotment of Shares <span style="color:#ff0000">*</span></small></label>
+                    <InputFile @bind-Value="regInfo.FormCO2AllotmentOfShares" class="multisteps-form__input form-control" OnChange="FormCO2AllotmentOfShares" />
+                    <ValidationMessage For="@(() => regInfo.FormCO2AllotmentOfShares)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Upload form CO7 - Particulars of Directors <span style="color:#ff0000">*</span></small></label>
+                    <InputFile @bind-Value="regInfo.FormCO7ParticularsOfDirectors" class="multisteps-form__input form-control" OnChange="FormCO7ParticularsOfDirectors" />
+                    <ValidationMessage For="@(() => regInfo.FormCO7ParticularsOfDirectors)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Upload Memart <span style="color:#ff0000">*</span></small></label>
+                    <InputFile @bind-Value="regInfo.Memart" class="multisteps-form__input form-control" OnChange="Memart" />
+                    <ValidationMessage For="@(() => regInfo.Memart)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label><small>Upload Board Resolution <span style="color:#ff0000">*</span></small></label>
+                    <InputFile @bind-Value="regInfo.BoardResolution" class="multisteps-form__input form-control" OnChange="BoardResolution" />
+                    <ValidationMessage For="@(() => regInfo.BoardResolution)" />
+                </div>
+               
+            </div>
+            @*</fieldset>*@
+            <br />
+            <p class="font-weight-bolder">Financials</p>
+
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Authorised Share Capital <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="regInfo.AuthorisedShareCapital" class="multisteps-form__input form-control" />
+                    <ValidationMessage For="@(() => regInfo.AuthorisedShareCapital)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Paid-Up Capital <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="regInfo.PaidUpCapital" class="multisteps-form__input form-control" />
+                    <ValidationMessage For="@(() => regInfo.PaidUpCapital)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Annual Turnover <span style="color:#ff0000">*</span></label>
+
+                    <InputSelect @bind-Value="regInfo.AnnualTurnover" class="form-control">
+                        <option>Select..</option>
+                        @if (turnover == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (turnover.Count > 0)
+                            {
+                                @foreach (var ct in turnover)
+                                {
+                                    <option value="@ct.name">@ct.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+
+                    <ValidationMessage For="@(() => regInfo.AnnualTurnover)" />
+                </div>
+            </div>
+            <p class="font-weight-bolder">Other Information</p>
+
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                    <label>Current Number of Employees <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="regInfo.CurrentNumberOfEmployees" class="multisteps-form__input form-control" />
+                    <ValidationMessage For="@(() => regInfo.CurrentNumberOfEmployees)" />
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                    <label>Parent Company (If applicable)</label>
+                    <InputText @bind-Value="regInfo.ParentCompany" class="multisteps-form__input form-control" />
+                    <ValidationMessage For="@(() => regInfo.ParentCompany)" />
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label>Subsidiaries/Affiliates (If applicable)</label>
+                    <InputText @bind-Value="regInfo.SubsidiariesAffiliates" class="multisteps-form__input form-control" />
+                    <ValidationMessage For="@(() => regInfo.SubsidiariesAffiliates)" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Nature of Business <span style="color:#ff0000">*</span></label>
+                    <InputTextArea @bind-Value="regInfo.NatureOfBusiness" rows="4" class="multisteps-form__input form-control selectpicker">   </InputTextArea>
+                    <ValidationMessage For="@(() => regInfo.NatureOfBusiness)" />
+                </div>
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Previous Business Engaged in? <span style="color:#ff0000">*</span></label>
+                    <InputTextArea @bind-Value="regInfo.PreviousBusinessEngagedIn" rows="4" class="multisteps-form__input form-control selectpicker">   </InputTextArea>
+                    <ValidationMessage For="@(() => regInfo.NatureOfBusiness)" />
+                </div>
+            </div>
+            <br />
+            <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+
+                    <label>Organization Membership</label>
+                    <select id="membership" class="form-control selectpicker" @onchange="MembershipOfAnyOrg">
+                        <option>Select..</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <br />
+                    @if (membership)
+                    {
+                        <div class="" id="membership12">
+                            <fieldset class="border p-2">
+                                <label>Name of Organization</label>
+                                <InputText @bind-Value="regInfo.NameOfOrganization" class="multisteps-form__input form-control" />
+
+                                <label>Membership Number</label>
+                                <InputText @bind-Value="regInfo.MembershipNumber" class="multisteps-form__input form-control" />
+
+                                <label>Joined Date</label>
+                                <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetJoinedDate"/>
+                                @*<InputDate @bind-Value="regInfo.JoinedDate" class="multisteps-form__input form-control" />*@
+                            </fieldset>
+                        </div>
+                    }
+
+                </div>
+                <div class="col-12 col-sm-4">
+
+                    <label>Present/threatened litigation with third-party?</label>
+                    <select class="form-control selectpicker" name="choices-category11" @onchange="LitigationWithThirdParty">
+                        <option>Select..</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <br />
+                    @if (litigation)
+                    {
+                        <div class="" id="litigation">
+                            <fieldset class="border p-2" id="div-litigation">
+                                <label>Third-party Name</label>
+                                <InputText @bind-Value="regInfo.ThirdPartyName" class="multisteps-form__input form-control" />
+                                <label>Suit Number</label>
+                                <InputText @bind-Value="regInfo.SuitNumber" class="multisteps-form__input form-control" />
+                            </fieldset>
+                        </div>
+                    }
+                </div>
+                <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+
+                    <label>Is your company quoted on any stock Exchange?</label>
+                    <select class="form-control selectpicker" id="company-quoted" @onchange="IsCompanyQuoted">
+                        <option>Select..</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <br />
+                    @if (companyQuoted)
+                    {
+                        <div class="" id="companyQuoted">
+                            <fieldset class="border p-2" id="div-stock-exchange">
+                                <label>Indicate Stock Symbol</label>
+                                <InputText @bind-Value="regInfo.IndicateStockSymbol" class="multisteps-form__input form-control" />
+                                <label>Stock Exchange</label>
+                                <InputText @bind-Value="regInfo.StockExchange" class="multisteps-form__input form-control" />
+                            </fieldset>
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <br />
+            <div class="button-row d-flex mt-4">
+                <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button" @onclick="BanktoCoyInfo">
+                    Previous
+                </button>
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="button" @onclick="SaveRegInfo">
+                    Save
+                </button>
+                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="submit">Next</button>
+            </div>
+            @*</div>*@
+
+        </div>
+    </div>
+</EditForm>
+@code {
+
+}

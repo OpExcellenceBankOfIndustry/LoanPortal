@@ -1,0 +1,85 @@
+﻿@inherits LayoutComponentBase
+@using System.Security.Claims
+@inject NavigationManager? NavigationManager
+<PageTitle>BOILoanPortal</PageTitle>
+
+@*<div class="page" style="background-image: linear-gradient(270deg, #fff 100%, #fff 100%)">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row"> 
+
+            <AuthorizeView>
+            <Authorized>
+                <a style="float:left; font-size: 14px; color:black; font-weight: bolder">
+                    Welcome, <b style="color:darkgreen; font-size: 18px">@context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value</b>
+                </a>
+                <a style="font-size: 18px;">&nbsp;&nbsp;|&nbsp;</a>
+                <a style="font-size: 16px; color:darkred; font-weight: bolder" href="../Pages/Register.cshtml">
+                    <i class="fa fa-sign-out"></i>Log out
+                </a>
+            </Authorized>
+        </AuthorizeView>
+            <img style="float: left; margin-left: 250px" src="images/boilogo.gif" />
+        </div>
+
+        <article class="content">
+            @Body
+        </article> 
+    </main>
+</div>*@
+
+@*style="position: sticky; align-items: center !important; border-bottom: 2px solid #d6d5d5 !important; height: 3.5rem !important; justify-content:flex-start !important"
+*@
+
+<div class="page" style="background-image: linear-gradient(270deg, #fff 50%, #fff 90%)">
+    <div class="sidebar" style="background-image: linear-gradient(270deg, #006C33 50%, #006C33 90%)">
+        <NavMenu />
+    </div>
+
+    <main >
+        <div class="headerdiv">
+            <AuthorizeView>
+                <Authorized>
+                    <div style="float:left; padding: 15px 0 0 15px;">
+                        <a style="font-size: 16px; color:black; font-weight: bolder">
+                            Welcome, <b style="color:darkgreen; font-size: 18px">@context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value</b>
+
+                        </a>
+                        <a style="font-size: 18px;">|</a>
+                        <a style="font-size: 16px; color:darkred; font-weight: bolder; cursor: pointer" href="javascript:void(0)" @onclick="logout">
+                            <i class="fa fa-sign-out"></i>Log out
+                        </a>
+                    </div>
+                </Authorized>
+            </AuthorizeView>
+            <a>
+                <img style="float: right; height:45px; padding:5px 25px 0 0;" src="images/boilogo.gif" />
+            </a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+@code{
+    private string logoutUrl = "/logout";
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //await HttpClient.HttpContextSignout();
+    //}
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+
+    }
+
+    private void logout()
+    {
+        NavigationManager?.NavigateTo(logoutUrl, true);
+    }
+}

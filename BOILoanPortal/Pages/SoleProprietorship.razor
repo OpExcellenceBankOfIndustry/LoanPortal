@@ -1,0 +1,523 @@
+﻿@page "/soleproprietorship/{id}"
+
+<div class="col-12 col-lg-11 m-auto">
+    <EditForm Model="@solProInfo" OnValidSubmit="SubmitSoleProprietorshipInfoForm">
+        <DataAnnotationsValidator />
+
+        <div class="multisteps-form__content">
+            <fieldset class="border p-2">
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Title <span style="color:#ff0000">*</span></label>
+                        <InputSelect class="form-control selectpicker" @bind-Value="solProInfo.Title">
+                            <option>Select..</option>
+                            @if (title == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (title.Count > 0)
+                                {
+                                    @foreach (var tt in title)
+                                    {
+                                        <option value="@tt.name.Trim()">@tt.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => solProInfo.Title)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>First Name <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.FirstName" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.FirstName)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>Surname <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.Surname" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.Surname)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Other Names</label>
+                        <InputText @bind-Value="solProInfo.OtherNames" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.OtherNames)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Maiden Name</label>
+                        <InputText @bind-Value="solProInfo.MaidenName" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.MaidenName)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>Date of Birth <span style="color:#ff0000">*</span></label>
+                        @*<InputDate @bind-Value="solProInfo.DateOfBirth" class="multisteps-form__input form-control" />*@
+                        <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetBirthDate"/>
+                        <ValidationMessage For="@(() => solProInfo.DateOfBirth)" />
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Place of Birth <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.PlaceOfBirth" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.PlaceOfBirth)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Gender <span style="color:#ff0000">*</span></label>
+                        <InputSelect @bind-Value="solProInfo.Gender" class="form-control selectpicker">
+                            <option>Select..</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => solProInfo.Gender)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>Marital Status <span style="color:#ff0000">*</span></label>
+                        <InputSelect @bind-Value="solProInfo.MaritalStatus" class="form-control selectpicker">
+                            <option>Select..</option>
+                            @if (mStatus == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (mStatus.Count > 0)
+                                {
+                                    @foreach (var ms in mStatus)
+                                    {
+                                        <option value="@ms.name.Trim()">@ms.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => solProInfo.MaritalStatus)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-6">
+                        <label>Phone Number <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.PhoneNumber" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.PhoneNumber)" />
+                    </div>
+                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                        <label>Email Address <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.EmailAddress" class="multisteps-form__input form-control selectpicker" />
+                        <ValidationMessage For="@(() => solProInfo.EmailAddress)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-8">
+                        <label>Home Address <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.HomeAddress" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.HomeAddress)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Please upload proof of Address <span style="color:#ff0000">*</span></small></label>
+                        <InputFile @bind-Value="solProInfo.ProofOfAddress" class="multisteps-form__input form-control" OnChange="ProofOfAddress"/>
+                        <ValidationMessage For="@(() => solProInfo.ProofOfAddress)" />
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>State <span style="color:#ff0000">*</span></label>
+                        <select id="State" class="form-control selectpicker" @onchange="GetLga" required>
+                            <option>Select..</option>
+                            @if (States == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (States.Count > 0)
+                                {
+                                    @foreach (var st in States)
+                                    {
+                                        <option value="@st.id">@st.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>LGA <span style="color:#ff0000">*</span></label>
+                        <select id="Lga" class="form-control selectpicker" name="lga" @onchange="GetCity" required>
+                            <option>Select..</option>
+                            @if (Lgas == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (Lgas.Count > 0)
+                                {
+                                    @foreach (var lg in Lgas)
+                                    {
+                                        <option value="@lg.id">@lg.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        @*<ValidationMessage For="@(() => coyInfo.LGA)" />*@
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0 a11y-input-tooltip">
+                        <label>Town/City <span style="color:#ff0000">*</span></label>
+                        <InputSelect @bind-Value="solProInfo.TownCity" class="form-control selectpicker">
+                            <option>Select..</option>
+                            @if (cities == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (cities.Count > 0)
+                                {
+                                    @foreach (var ct in cities)
+                                    {
+                                        <option value="@ct.name">@ct.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => solProInfo.TownCity)" />
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Highest Educational Qualification <span style="color:#ff0000">*</span></label>
+                        <InputSelect @bind-Value="solProInfo.HighestEducationalQualification" class="form-control selectpicker">
+                            <option>--Select--</option>
+                            @if (education == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (education.Count > 0)
+                                {
+                                    @foreach (var ed in education)
+                                    {
+                                        <option value="@ed.name.Trim()">@ed.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => solProInfo.HighestEducationalQualification)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>BVN Number <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.BVN" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.BVN)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>NIN <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.NIN" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.NIN)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>TIN</label>
+                        <InputText @bind-Value="solProInfo.TIN" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.TIN)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Percentage Ownership <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.PercentageOwnership" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.PercentageOwnership)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>Nationality <span style="color:#ff0000">*</span></label>
+                        <select class="form-control selectpicker" id="Nationality" @onchange="OnNationalityChange">
+                            <option>Select..</option>
+                            @if (country.allCountries == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (country.allCountries.Count > 0)
+                                {
+                                    @foreach (var co in country.allCountries)
+                                    {
+                                        <option value="@co.name.Trim()">@co.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                @if (hideCERPAC)
+                {
+                    <div class="row mt-3">
+                        <div class="col-12 col-sm-4">
+                            <label>CERPAC (Upload Resident Permit)</label>
+                            <InputFile @bind-Value="solProInfo.CERPAC" class="multisteps-form__input form-control" OnChange="GetCERPAC"/>
+                        </div>
+                        <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                            <label>CERPAC Issue Date</label>
+                            @*<InputDate @bind-Value="solProInfo.CERPACIssueDate" class="multisteps-form__input form-control" />*@
+                            <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetCERPACIssueDate"/>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label>CERPAC Expiry Date</label>
+                            @*<InputDate @bind-Value="solProInfo.CERPACExpiryDate" class="multisteps-form__input form-control" />*@
+                            <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetCERPACExpiryDate"/>
+                        </div>
+                    </div>
+                }
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Identification Type <span style="color:#ff0000">*</span></label>
+                        <InputSelect class="form-control selectpicker" @bind-Value="solProInfo.IdentificationType">
+                            <option>--Select--</option>
+                            @if (idType == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (idType.Count > 0)
+                                {
+                                    @foreach (var id in idType)
+                                    {
+                                        <option value="@id.name.Trim()">@id.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => solProInfo.IdentificationType)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Identification Number <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.IdentificationNumber" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.IdentificationNumber)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Please upload the Identification file here <span style="color:#ff0000">*</span></small></label>
+                        <InputFile @bind-Value="solProInfo.IdentificationFile" class="multisteps-form__input form-control" OnChange="IdentificationFile" />
+                        <ValidationMessage For="@(() => solProInfo.IdentificationFile)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Identification Issue Date <span style="color:#ff0000">*</span></label>
+                        @*<InputDate @bind-Value="solProInfo.IdentificationIssueDate" class="multisteps-form__input form-control" />*@
+                        <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetIdIssueDate"/>
+                        <ValidationMessage For="@(() => solProInfo.IdentificationIssueDate)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>Identification Expiry Date <span style="color:#ff0000">*</span></label>
+                        @*<InputDate @bind-Value="solProInfo.IdentificationExpiryDate" class="multisteps-form__input form-control" />*@
+                        <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetIdExpiryDate"/>
+                        <ValidationMessage For="@(() => solProInfo.IdentificationExpiryDate)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Please upload passport photograph here.(.jgp,.png,.jpeg) <span style="color:#ff0000">*</span></small></label>
+                        <InputFile @bind-Value="solProInfo.PassportPhotograph" class="multisteps-form__input form-control" OnChange="PassportPhotograph"/>
+                        <ValidationMessage For="@(() => solProInfo.PassportPhotograph)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Occupation <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.Occupation" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => solProInfo.Occupation)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>Job Title <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="solProInfo.JobTitle" class="form-control selectpicker" />
+                        <ValidationMessage For="@(() => solProInfo.JobTitle)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label><small>Please upload CV <span style="color:#ff0000">*</span></small></label>
+                        <InputFile @bind-Value="solProInfo.UploadCV" class="multisteps-form__input form-control" OnChange="UploadCV"/>
+                        <ValidationMessage For="@(() => solProInfo.UploadCV)" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-6">
+                        <label>Do you have any political affilation or hold any political office? <span style="color:#ff0000">*</span></label>
+                        <select id="AnyPoliticalAffilationWithAPoliticalOfficeHolder" class="form-control selectpicker" @onchange="AnyPoliticalAffilationWithAPoliticalOfficeHolder">
+                            <option>Select..</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        @if (politicalAffilate)
+                        {
+                            <label>Indicate the political office/Relationship</label>
+                            <InputText @bind-Value="solProInfo.IndicatePoliticalOfficerRelationship" class="multisteps-form__input form-control" />
+                        }
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <label>Have you contested or occupied any political office in the past? <span style="color:#ff0000">*</span></label>
+                        <select id="ContestedPoliticalOffice" class="form-control selectpicker" @onchange="ContestedPoliticalOffice">
+                            <option>Select..</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        @if (contestedPoliticalOffice)
+                        {
+                            <label>Indicate the political office</label>
+                            <InputText @bind-Value="solProInfo.IndicatePoliticalOffice" class="multisteps-form__input form-control" />
+                        }
+                    </div>
+                </div>
+
+            </fieldset>
+            <br />
+
+            <NavLink class="nav-link" style="color:#006C33" href="javascript:void(0)" @onclick="ShowAddNextOfKintModal">
+                <span class="oi oi-plus" style="color:#006C33" aria-hidden="true"></span> Add Next of Kin
+            </NavLink>
+
+            <div id="shareholder-indv-table">
+
+                <fieldset class="border p-2">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body px-0 pb-0">
+                                    <h5 class="table-header"> Details of Next of Kin</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-flush" id="products-list">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Fullname</th>
+                                                    <th>Gender</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Email Address</th>
+                                                    <th>Home Address</th>
+                                                    <th>Options</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (solProInfo.kins != null)
+                                                {
+                                                    @if (solProInfo.kins.Count > 0)
+                                                    {
+                                                        @foreach (var kin in solProInfo.kins)
+                                                        {
+                                                            @if (kin != null)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-sm">@kin.Title</td>
+                                                                    <td class="text-sm">@kin.Surname @kin.FirstName</td>
+                                                                    <td class="text-sm">@kin.Gender</td>
+                                                                    <td class="text-sm">@kin.PhoneNumber</td>
+                                                                    <td class="text-sm">@kin.EmailAddress</td>
+                                                                    <td class="text-sm">@kin.HomeAddress</td>
+                                                                    <td class="text-sm">
+                                                                        <a href="#"><ion-icon name="eye" style="color: #059128;"></ion-icon></a> <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                                                                        <a href="#"><ion-icon name="pencil" style="color: #2600ff; "></ion-icon></a> <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                                                                        <a href="#"><ion-icon name="trash" style="color: #ff0000;"></ion-icon></a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <br />
+            <NavLink class="nav-link" style="color:#006C33" href="javascript:void(0)" @onclick="@ShowAddAccountModal">
+                <span class="oi oi-plus" style="color:#006C33" aria-hidden="true"></span> Add Account Details
+            </NavLink>
+
+            <div id="shareholder-cor-table">
+                <fieldset class="border p-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body px-0 pb-0">
+                                    <h5 class="table-header">Account Details of Owner</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-flush" id="products-list">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Account Name</th>
+                                                    <th>Account Number</th>
+                                                    <th>BankName</th>
+                                                    <th>Options</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (solProInfo.accts != null)
+                                                {
+                                                    @if (solProInfo.accts.Count > 0)
+                                                    {
+                                                        @foreach (var acc in solProInfo.accts)
+                                                        {
+                                                            @if (acct != null)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-sm">@acc.BankName</td>
+                                                                    <td class="text-sm">@acc.AccountNumber</td>
+                                                                    <td class="text-sm">@acc.AccountName</td>
+                                                                    <td class="text-sm">
+                                                                        <a href="#"><ion-icon name="eye" style="color: #059128;"></ion-icon></a> <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                                                                        <a href="#"><ion-icon name="pencil" style="color: #2600ff; "></ion-icon></a> <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                                                                        <a href="#"><ion-icon name="trash" style="color: #ff0000;"></ion-icon></a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="button-row d-flex mt-4">
+                <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button" title="Prev">Previous</button>
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="button" @onclick="SaveSoleProprietorshipInfo">Save</button>
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="submit">Next</button>
+
+            </div>
+        </div>
+
+    </EditForm>
+
+    
+
+            @*@if (nextofkin)
+            {
+                
+            }
+
+            @if (acctDetails)
+            {
+                
+            }
+*@
+
+
+</div>
+
+@code {
+
+}

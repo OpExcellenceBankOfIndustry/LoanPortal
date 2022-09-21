@@ -1,0 +1,149 @@
+﻿@page "/corporateownershipinfo"
+
+<EditForm Model="@coInfo" OnValidSubmit="SubmitCorporateOwnershipInformation">
+    <DataAnnotationsValidator />
+    <div class="multisteps-form__content">
+        <h5 class="font-weight-bolder">Cooperate Shareholder</h5>
+        <div class="row mt-3">
+            <div class="col-12 col-sm-4">
+                <label>Name of shareholding company</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.NameOfShareholdingCompany" />
+                <ValidationMessage For="@(() => coInfo.NameOfShareholdingCompany)" />
+            </div>
+            <div class="col-12 col-sm-4">
+                <label>Registration Number</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.RegistrationNumber" />
+                <ValidationMessage For="@(() => coInfo.RegistrationNumber)" />
+            </div>
+            <div class="col-12 col-sm-4">
+                <label>Contact Person Name</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.ContactPersonName" />
+                <ValidationMessage For="@(() => coInfo.ContactPersonName)" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Percentage Ownership</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.PercentageOwnership" />
+                <ValidationMessage For="@(() => coInfo.PercentageOwnership)" />
+            </div>
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Address</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.CompanyAddress" />
+                <ValidationMessage For="@(() => coInfo.NameOfShareholdingCompany)" />
+            </div>
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Phone Number</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.PhoneNumber" />
+                <ValidationMessage For="@(() => coInfo.PhoneNumber)" />
+            </div>
+        </div>
+        <div class="row mt-3">
+
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>State <span style="color:#ff0000">*</span></label>
+                <select id="State" class="form-control selectpicker" @onchange="GetLga" required>
+                    <option>Select..</option>
+                    @if (States == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        @if (States.Count > 0)
+                        {
+                            @foreach (var st in States)
+                            {
+                                <option value="@st.id">@st.name.Trim()</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-12 col-sm-4">
+                <label>LGA <span style="color:#ff0000">*</span></label>
+                <select id="Lga" class="form-control selectpicker" name="lga" @onchange="GetCity" required>
+                    <option>Select..</option>
+                    @if (Lgas == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        @if (Lgas.Count > 0)
+                        {
+                            @foreach (var lg in Lgas)
+                            {
+                                <option value="@lg.id">@lg.name.Trim()</option>
+                            }
+                        }
+                    }
+                </select>
+                @*<ValidationMessage For="@(() => coyInfo.LGA)" />*@
+            </div>
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0 a11y-input-tooltip">
+                <label>Town/City <span style="color:#ff0000">*</span></label>
+                <InputSelect @bind-Value="coInfo.TownCity" class="form-control selectpicker">
+                    <option>Select..</option>
+                    @if (cities == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        @if (cities.Count > 0)
+                        {
+                            @foreach (var ct in cities)
+                            {
+                                <option value="@ct.name.Trim()">@ct.name.Trim()</option>
+                            }
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => coInfo.TownCity)" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Email</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.EmailAddress" />
+                <ValidationMessage For="@(() => coInfo.EmailAddress)" />
+            </div>
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Website</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.Website" />
+                @*<ValidationMessage For="@(() => coInfo.Website)" />*@
+            </div>
+            <div class="col-12 col-sm-4">
+                <label>Twitter</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.Twitter" />
+                @*<ValidationMessage For="@(() => coInfo.Twitter)" />*@
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Facebook</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.Facebook" />
+                @*<ValidationMessage For="@(() => coInfo.Facebook)" />*@
+            </div>
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Instagram</label>
+                <InputText class="multisteps-form__input form-control" @bind-Value="coInfo.Instagram" />
+                @*<ValidationMessage For="@(() => coInfo.Instagram)" />*@
+            </div>
+            <div class="col-12 col-sm-4">
+                <label>Upload Certificate of Incorporation/Registration</label>
+                <InputFile @bind-Value="coInfo.CertificateOfIncorporationRegistration" class="multisteps-form__input form-control" OnChange="CertificateOfIncorporationRegistration" />
+                <ValidationMessage For="@(() => coInfo.CertificateOfIncorporationRegistration)" />
+            </div>
+        </div>
+        
+        <div class="button-row d-flex mt-4">
+            <button class="btn bg-gradient-dark ms-auto mb-0" type="submit">Add</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+}

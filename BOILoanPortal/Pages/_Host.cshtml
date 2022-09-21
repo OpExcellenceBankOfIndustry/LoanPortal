@@ -1,0 +1,10 @@
+﻿@page "/"
+@namespace BOILoanPortal.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<component type="typeof(App)" render-mode="Server" />
+
+@*@(await Html.RenderComponentAsync<App>(RenderMode.Server))*@

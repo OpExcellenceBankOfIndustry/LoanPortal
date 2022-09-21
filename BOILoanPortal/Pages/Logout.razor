@@ -1,0 +1,15 @@
+﻿@page "/logout"
+@using BOILoanPortal.Services
+@layout MainLayout
+@inject ILoginService logServ
+@inject NavigationManager? NavigationManager
+
+@code {
+    //[Inject] public ILoginService _loginService { get; set; }
+    protected override async void OnInitialized()
+    {
+        await logServ.Logout();
+
+         NavigationManager?.NavigateTo("/login", true);
+    }
+}

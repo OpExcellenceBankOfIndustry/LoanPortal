@@ -1,0 +1,61 @@
+﻿@page "/"
+@page "/index"
+@using System.Security.Claims
+@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Components.Server.Circuits
+@using BOILoanPortal.Models
+@inject CircuitHandler? CircuitHandlerService
+@inject NavigationManager? NavigationManager
+@*@inject AuthenticationState userState*@
+
+@attribute [Authorize]
+
+<PageTitle>Index</PageTitle>
+
+<h3>Bank of Industry Internet Banking</h3>
+
+You can navigate through the menu to perform the follow transaction
+
+<p>
+    <ul>
+        <li>Account Opening</li>
+        <li>Loan Request</li>
+        <li>Loan Request Status</li>
+        <li>Account Statement</li>
+    </ul>
+</p>
+
+@code {
+
+    public AuthenticatedUser loginUser { get; set; } = new();
+    //[Inject] IMemoryCache _memoryCache { get; set; }
+    //public HttpContext? http { get; set; }
+
+    //public AuthenticationState state;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        int cCount = (CircuitHandlerService as BOILoanPortal.Services.CircuitHandlerService).Circuits.Count;
+
+        //ClaimsPrincipal user = 
+
+        //var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+        var authState = await AuthState;
+        var currentUser = authState.User;
+        int i = 0;
+        //var tt = currentUser.Identity.Name
+
+        //var currentUser  = http?.User;
+        //loginUser = _memoryCache.Get<AuthenticatedUser>($"login");
+
+        //.HasClaim(c => c.Type == ClaimTypes.Sid)
+        //if (cCount > 0 && currentUser is null)
+        //{
+        //    NavigationManager?.NavigateTo($"{NavigationManager.BaseUri}Register", true);
+        //}
+    }
+}

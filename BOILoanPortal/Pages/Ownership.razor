@@ -1,0 +1,155 @@
+﻿@page "/ownership/{id}"
+
+<EditForm Model=@ownershipInfo OnValidSubmit="SubmitOwnershipInfo">
+    <DataAnnotationsValidator />
+    <div class="col-12 col-lg-11 m-auto">
+        <div class="multisteps-form__content">
+            <div class="row mt-3">
+                <div class="col-12 col-sm-6">
+                    <label>Shareholder type <span style="color:#ff0000">*</span></label>
+                    <select class="form-control selectpicker" @onchange="SelectShareholderType">
+                        <option>--Select--</option>
+                        <option value="individual">Individual Shareholder</option>
+                        <option value="corporate">Corporate Shareholder</option>
+                    </select>
+                </div>
+
+
+                @if (indType)
+                {
+                    <NavLink class="nav-link" style="color:#006C33" href="javascript:void(0)" @onclick="ShowIndividualOwnershipInformationModal">
+                        <span class="oi oi-plus" style="color:#006C33" aria-hidden="true"></span> Add Individual Shareholder
+                    </NavLink>
+                    <div id="shareholder-indv-table">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body px-0 pb-0">
+                                        <h5 class="table-header">Individual Shareholder</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-flush" id="products-list">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Title</th>
+                                                        <th>Fullname</th>
+                                                        <th>Gender</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Email Address</th>
+                                                        <th>Marital Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Inds != null)
+                                                    {
+                                                        @if (Inds.Count > 0)
+                                                        {
+                                                            @foreach (var ind in ownershipInfo.Inds)
+                                                            {
+                                                                @if (ind != null)
+                                                                {
+                                                                    <tr>
+                                                                        <td class="text-sm">@ind.Title</td>
+                                                                        <td class="text-sm">@ind.FirstName @ind.Surname</td>
+                                                                        <td class="text-sm">@ind.Gender</td>
+                                                                        <td class="text-sm">@ind.PhoneNumber</td>
+                                                                        <td class="text-sm">@ind.EmailAddress</td>
+                                                                        <td class="text-sm">@ind.MaritalStatus</td>
+                                                                        <td class="text-sm">
+                                                                            <a href="#"><ion-icon name="eye" style="color: #059128;"></ion-icon></a> <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                                                                            <a href="#"><ion-icon name="pencil" style="color: #2600ff; "></ion-icon></a> <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                                                                            <a href="#"><ion-icon name="trash" style="color: #ff0000;"></ion-icon></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <br />
+                @if (corpType)
+                {
+                    <NavLink class="nav-link" style="color:#006C33" href="javascript:void(0)" @onclick="ShowCorporateOwnershipInformationModal">
+                        <span class="oi oi-plus" style="color:#006C33" aria-hidden="true"></span> Add Corporate Shareholder
+                    </NavLink>
+                    <div id="shareholder-cor-table">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body px-0 pb-0">
+                                        <h5 class="table-header">Corporate Shareholder</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-flush" id="products-list">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Company Name</th>
+                                                        <th>Reg Number</th>
+                                                        <th>% Ownership</th>
+                                                        <th>Contact Person Name</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Company Address</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Corps != null)
+                                                    {
+                                                        @if (Corps.Count > 0)
+                                                        {
+                                                            @foreach (var corp in ownershipInfo.Corps)
+                                                            {
+                                                                @if (corp != null)
+                                                                {
+                                                                    <tr>
+                                                                        <td class="text-sm">@corp.NameOfShareholdingCompany</td>
+                                                                        <td class="text-sm">@corp.RegistrationNumber</td>
+                                                                        <td class="text-sm">@corp.PercentageOwnership</td>
+                                                                        <td class="text-sm">@corp.ContactPersonName</td>
+                                                                        <td class="text-sm">@corp.PhoneNumber</td>
+                                                                        <td class="text-sm">@corp.CompanyAddress</td>
+                                                                        <td class="text-sm">
+                                                                            <a href="#" tooltip="view"><ion-icon name="eye" style="color: #059128;"></ion-icon></a> <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                                                                            <a href="#"><ion-icon name="pencil" style="color: #2600ff; "></ion-icon></a> <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                                                                            <a href="#"><ion-icon name="trash" style="color: #ff0000;"></ion-icon></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <br />
+                @*<hr>*@
+                <div class="button-row d-flex mt-4">
+                    <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn bg-gradient-dark ms-auto mb-0 " type="button" @onclick="SaveOwnershipInfo">Save</button>
+                    <button class="btn bg-gradient-dark ms-auto mb-0 " type="submit">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+}

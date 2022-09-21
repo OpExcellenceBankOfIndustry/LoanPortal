@@ -1,0 +1,204 @@
+﻿@page "/companyInfo"
+@page "/companyInfo/{id}"
+@*@page "/companyInfo/{userid}"*@
+
+@attribute [Authorize]
+
+
+<EditForm Model="@coyInfo" class="" OnValidSubmit="@SubmitCoyInfoForm">
+    <DataAnnotationsValidator />
+    <div class="col-12 col-lg-11 m-auto">
+        <h3 class="font-weight-bolder header-font"> <strong> Company Information </strong></h3>
+        <div class="multisteps-form__content">
+            <div class="row mt-3">
+                <div class="col-12 col-sm-6">
+                    <label>Company Register Name  <span style="color:#ff0000">*</span></label>
+                    <InputText @bind-Value="coyInfo.CompanyName" class="multisteps-form__input form-control" type="text" placeholder="Enter Company Name" />
+                    <ValidationMessage For="@(() => coyInfo.CompanyName)" />
+                </div>
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Company Short Name</label>
+                    <InputText @bind-Value="coyInfo.CompanyShortName" class="multisteps-form__input form-control popover-test" data-content="" type="text" />
+                </div>
+
+            </div>
+
+            <div class="row mt-3">
+
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Company Type<span style="color:#ff0000">*</span></label>
+                    <InputSelect @bind-Value="coyInfo.CompanyType" class="form-control selectpicker">
+                        <option>Select</option>
+                        @if (coyType == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (coyType.Count > 0)
+                            {
+                                @foreach (var ct in coyType)
+                                {
+                                    <option value="@ct.name">@ct.name.Trim()</option>
+                                }
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => coyInfo.CompanyType)" />
+                </div>
+
+                @*<div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Test Date <span style="color:#ff0000">*</span></label>
+                    <input type="date" class="form-control" format="yyyy-MM-dd" @onchange="GetRegDate"/>
+                    <ValidationMessage For="@(() => coyInfo.testdate)" />
+                </div>*@
+            </div>
+            <br />
+
+            <p class="font-weight-bolder">Registered Company Address</p>
+            <fieldset class="border p-2">
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-6">
+                        <label>Address <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="coyInfo.CompanyAddress" class="multisteps-form__input form-control" type="text" placeholder="" />
+                        <ValidationMessage For="@(() => coyInfo.CompanyAddress)" />
+                    </div>
+                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                        <label>Landmark <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="coyInfo.Landmark" class="multisteps-form__input form-control" type="text" placeholder="" />
+                        @*<ValidationMessage For="@(() => coyInfo.Landmark)" />*@
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>State <span style="color:#ff0000">*</span></label>
+                        <select id="State" class="form-control selectpicker" @onchange="GetLga" required>
+                            <option>Select..</option>
+                            @if (States == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (States.Count > 0)
+                                {
+                                    @foreach (var st in States)
+                                    {
+                                        <option value="@st.id">@st.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label>LGA <span style="color:#ff0000">*</span></label>
+                        <select id="Lga" class="form-control selectpicker" name="lga" @onchange="GetCity" required>
+                            <option>Select..</option>
+                            @if (Lgas == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (Lgas.Count > 0)
+                                {
+                                    @foreach (var lg in Lgas)
+                                    {
+                                        <option value="@lg.id">@lg.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0 a11y-input-tooltip">
+                        <label>Town/City <span style="color:#ff0000">*</span></label>
+                        <InputSelect @bind-Value="coyInfo.TownCity" class="form-control selectpicker" name="TownCity" id="TownCity">
+                            <option>Select..</option>
+                            @if (cities == null)
+                            {
+                                <p><em>Loading...</em></p>
+                            }
+                            else
+                            {
+                                @if (cities.Count > 0)
+                                {
+                                    @foreach (var ct in cities)
+                                    {
+                                        <option value="@ct.name">@ct.name.Trim()</option>
+                                    }
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => coyInfo.TownCity)" />
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Phone Number <span style="color:#ff0000">*</span></label>
+                        <InputNumber @bind-Value="coyInfo.PhoneNumber" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => coyInfo.PhoneNumber)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Email Address <span style="color:#ff0000">*</span></label>
+                        <InputText @bind-Value="coyInfo.EmailAddress" class="multisteps-form__input form-control" />
+                        <ValidationMessage For="@(() => coyInfo.EmailAddress)" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Website</label>
+                        <InputText @bind-Value="coyInfo.Website" class="multisteps-form__input form-control" />
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4">
+                        <label>Twitter</label>
+                        <InputText @bind-Value="coyInfo.Twitter" class="multisteps-form__input form-control" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Facebook</label>
+                        <InputText @bind-Value="coyInfo.Facebook" class="multisteps-form__input form-control" />
+                    </div>
+                    <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Instagram</label>
+                        <InputText @bind-Value="coyInfo.Instagram" class="multisteps-form__input form-control" />
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+
+                    @*<div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                        <label>Does the company owns business premises? <span style="color:#ff0000">*</span></label>
+                        <InputSelect @bind-Value="coyInfo.CompanyOwnsBusinessPremises" class="form-control selectpicker">
+                            <option>Select..</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => coyInfo.CompanyOwnsBusinessPremises)" />
+                    </div>*@
+                    
+                        <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                            <label><small>Please upload proof of Company Address <span style="color:#ff0000">*</span></small></label>
+                            <InputFile @bind-Value="coyInfo.ProofOfCompanyAddress" class="multisteps-form__input form-control" OnChange="AddressProofChange" />
+                            <ValidationMessage For="@(() => coyInfo.ProofOfCompanyAddress)" />
+                        </div>
+                    
+                </div>
+            </fieldset>
+            <br />
+
+            <div class="row">
+                <div class="button-row d-flex mt-4 col-12">
+                    <button class="btn bg-gradient-dark ms-auto mb-0" type="button" @onclick="SaveCoyInfo">Save</button>
+                    <button class="btn bg-gradient-dark ms-auto mb-0" type="submit">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+}

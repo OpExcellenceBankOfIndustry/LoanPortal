@@ -1,0 +1,91 @@
+﻿@page "/accountdetails"
+
+<EditForm Model="@acct" class="" >
+    <div class="multisteps-form__content">
+        <p class="font-weight-bolder">Account Details of Owner</p>
+
+        <div class="row mt-3">
+            <div class="col-12 col-sm-4">
+                <label>Bank</label>
+                <InputSelect @bind-Value="acct.BankName" class="form-control selectpicker">
+                    <option value="" selected="">Select..</option>
+                    @if (banks == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        @if (banks.Count > 0)
+                        {
+                            @foreach (var bk in banks)
+                            {
+                                <option value="@bk.name">@bk.name.Trim()</option>
+                            }
+                        }
+                    }
+                </InputSelect>
+            </div>
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Account Number</label>
+                <InputText @bind-Value="acct.AccountNumber" class="multisteps-form__input form-control" />
+            </div>
+            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                <label>Account Name</label>
+                <InputText @bind-Value="acct.AccountName" class="multisteps-form__input form-control" />
+            </div>
+        </div>
+
+        <div class="button-row d-flex mt-4">
+            <button class="btn bg-gradient-dark ms-auto mb-0" id="btn-add-account-details" @onclick="SubmitForm">Add</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+}
+
+@*@if (ShowDialog)  
+{  
+  
+<div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">  
+    <div class="modal-dialog" role="document">  
+        <div class="modal-content">  
+            <div class="modal-header">  
+                <h5 class="modal-title" id="titleLabel">Add Employee</h5>  
+                <button type="button" class="close" @onclick="@Close" data-dismiss="modal" aria-label="Close">  
+                    <span aria-hidden="true">×</span>  
+                </button>  
+            </div>  
+            <div class="modal-body">  
+                <EditForm Model="@Employee" OnValidSubmit="@HandleValidSubmit">  
+                    <DataAnnotationsValidator />  
+                    <ValidationSummary />  
+                    <div class="form-group">  
+                        <label for="lastName">Last name: </label>  
+                        <InputText id="lastName" class="form-control" @bind-Value="@Employee.LastName" placeholder="Enter last name"></InputText>  
+                        <ValidationMessage For="@(() => Employee.LastName)" />  
+                    </div>  
+                    <div class="form-group">  
+                        <label for="firstName">First name: </label>  
+                        <InputText id="firstName" class="form-control" @bind-Value="@Employee.FirstName" placeholder="Enter first name"></InputText>  
+                        <ValidationMessage For="@(() => Employee.FirstName)" />  
+                    </div>  
+                    <div class="form-group">  
+                        <label for="email">Email: </label>  
+                        <InputText id="email" class="form-control" @bind-Value="@Employee.Email" placeholder="Enter email"></InputText>  
+                        <ValidationMessage For="@(() => Employee.Email)" />  
+                    </div>  
+                    <button type="submit" class="btn btn-primary">Save employee</button>  
+                    <a class="btn btn-outline-primary" @onclick="@Close">Close</a>  
+                </EditForm>  
+            </div>  
+        </div>  
+    </div>  
+</div>  
+}
+
+@code {
+    
+}
+*@

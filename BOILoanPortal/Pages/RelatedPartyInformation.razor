@@ -1,0 +1,70 @@
+﻿@page "/relatedparty/{id}"
+
+<EditForm Model="@relatedPartyInfo" class="" OnValidSubmit="SubmitRelatedPartyInfoForm">
+    <DataAnnotationsValidator />
+    <div class="col-12 col-lg-11 m-auto">
+        <div class="multisteps-form__content">
+            <h3 class="font-weight-bolder header-font"> <strong>Related Party Information </strong></h3>
+            <div class="row mt-3">
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>How do you know about BOI? <span style="color:#ff0000">*</span></label>
+                    <InputSelect @bind-Value="relatedPartyInfo.HowDoYouKnowAboutBOI" class="form-control selectpicker">
+                        <option>Select..</option>
+                        <option value="Radio">Radio</option>
+                        <option value="Television">Television</option>
+                        <option value="Newspaper">Newspaper</option>
+                        <option value="Twitter">Twitter</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="Facebook">Facebook</option>
+                    </InputSelect>
+                </div>
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <label>Do you have any relationship with any BOI employee or any its directors?<span style="color:#ff0000">*</span></label>
+                    <select class="form-control selectpicker" id="relationshipwithboi" @onchange="HaveRelationship">
+                        <option value="" selected="">Select..</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>
+            @if (RelationshipExists)
+            {
+                <div class="row mt-3">
+
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                </div>
+                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <fieldset class="border p-2" id="relationshipId">
+                        <label>Name of Employee/Director</label>
+                        <InputText @bind-Value="relatedPartyInfo.NameOfEmployeeDirector" class="multisteps-form__input form-control" />
+                        <label>Relationship</label>
+                        <InputSelect @bind-Value="relatedPartyInfo.Relationship" class="form-control selectpicker" >
+                            <option value="" selected="">Select..</option>
+                            <option value="Spouse">Spouse</option>
+                            <option value="Brother">Brother</option>
+                            <option value="Sister">Sister</option>
+                            <option value="Father">Father</option>
+                            <option value="Mother">Mother</option>
+                        </InputSelect>
+                    </fieldset>
+                </div>
+            </div>
+            }
+
+
+            <div class="row">
+                <div class="button-row d-flex mt-4">
+                <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button" @onclick="BackToOwenership">Previous</button>
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="button" @onclick="SaveRelatedPartyInfo">Save</button>
+                <button class="btn bg-gradient-dark ms-auto mb-0" type="submit">Next</button>
+
+            </div>
+            </div>
+
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+}

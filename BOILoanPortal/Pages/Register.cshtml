@@ -1,0 +1,134 @@
+﻿@page "/register"
+@model BOILoanPortal.Pages.Register
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Style -->
+    <link rel="stylesheet" href="register/css/style.css">
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+<body>
+
+    <div>
+        <img style="margin: 30px 0 0 230px;" src="images/boilogo.gif" />
+    </div>
+
+    <div class="login-reg-panel">
+
+        <div class="login-info-box">
+            <h2>Have an account?</h2>
+            <p>Login with your account credentials</p>
+            <label id="label-register" for="log-reg-show">Login</label>
+            <input type="radio" name="active-log-panel" id="log-reg-show" checked="checked">
+        </div>
+
+        <div class="register-info-box">
+            <h2>Don't have an account?</h2>
+            <p>Kindly register!</p>
+            <label id="label-login" for="log-login-show">Register</label>
+            <input type="radio" name="active-log-panel" id="log-login-show">
+        </div>
+
+        <div class="white-panel">
+            <div class="login-show">
+                <br />
+                <br />
+                <div id="loginDiv">
+                    <h4><b>Kindly login with your credentials</b></h4>
+                    <form method="post">
+                        <input asp-for="Email" autocomplete="off" type="text" placeholder="Email">
+                        <input asp-for="Password" autocomplete="off" type="password" placeholder="Password">
+                        <div class="form-group">
+                            <input disabled="@Model.loading" type="submit" value="Login" class="btn float-right login_btn" asp-page-handler="Login">
+                            @*@if (Model.loading)
+                            {
+                                <span class="spinner-border spinner-border-sm mr-1"></span>
+                            }
+                        </button>*@
+                        </div>
+                        @*<input type="button" value="Login" asp-page-handler="Login">*@
+                        <a href="" onclick="">Forgot password?</a>
+                    </form>
+                </div>
+                <div id="forgetPasswordDiv" style="display:none">
+                    <h4><b>Forgot Password</b></h4>
+                    <form method="post">
+                        <input asp-for="Email" autocomplete="off" type="text" placeholder="Email">
+                        <div class="form-group">
+                            <input type="submit" class="btn float-right login_btn" asp-page-handler="Login">
+                        </div>
+                        @*<input type="button" value="Login" asp-page-handler="Login">*@
+                        <a href="" onclick="">Click here to Login</a>
+                    </form>
+                </div>
+            </div>
+            <div class="register-show">
+                <h5><b>REGISTER</b></h5>
+                <form method="post">
+                    <input asp-for="Email" autocomplete="off" type="text" placeholder="Email">
+                    <input asp-for="RCNumber" autocomplete="off" type="text" placeholder="RCNumber">
+                    <input asp-for="BusinessName" autocomplete="off" type="text" placeholder="Business Name">
+                    <select asp-for="BusinessLocation" autocomplete="off" style="width:100%;" type="text" placeholder="Business Location">
+                        <option value="">Select Business Location</option>
+                        @if (Model.states == null)
+                        {
+                            <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                            @if (Model.states.Count > 0)
+                            {
+                                @foreach (var st in Model.states)
+                                {
+                                    <option value="@st.name">@st.name</option>
+                                }
+                            }
+                        }
+                    </select>
+                    <input asp-for="BusinessType" autocomplete="off" type="text" placeholder="Business Type">
+                    @*<div class="row">
+                        <div class="col">*@
+                    <input asp-for="PhoneNumber" autocomplete="off" type="text" placeholder="Phone Number">
+                    @*</div>
+                        <div class="col">*@
+                    <input asp-for="RegistrationDate" style="width:100%;" autocomplete="off" type="date" value="RegistrationDate" placeholder="Registration Date">
+                    @*</div>
+                        </div>
+                        <div class="row">
+                        <div class="col">*@
+                    <input asp-for="Password" autocomplete="off" type="password" placeholder="Password">
+                    @*</div>
+                        <div class="col">*@
+                    <input asp-for="ConfirmPassword" autocomplete="off" type="password" placeholder="Confirm Password">
+                    @* </div>
+                        </div>*@
+                    <div class="form-group">
+                        <input disabled="@Model.loading" type="submit" value="Register" class="btn float-right login_btn" asp-page-handler="Register">
+                    </div>
+                    @*<input type="button" value="Register" asp-page-handler="Register">*@
+                </form>
+
+                @if (ViewData["ErrorMessage"] != null)
+                {
+                    <script type="text/javascript">
+                                window.onload = function () {
+                                alert("@ViewData["ErrorMessage"].ToString()");
+                        };
+                    </script>
+                }
+            </div>
+        </div>
+    </div>
+    <script src="register/js/jScript.js"></script>
+</body>
+</html>
+
+
